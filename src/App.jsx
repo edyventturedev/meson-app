@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Ico } from "./icons.jsx";
 import {
-  ROOMS, GROUP, AMENITIES, NEARBY, NAV, HERO_VIDEO_ID, SYSTEM_PROMPT, QUICK,
+  ROOMS, GROUP, AMENITIES, NEARBY, NAV, HERO_VIDEO_SRC, QUICK,
 } from "./data.js";
 import { useLang } from "./i18n.js";
 
@@ -87,23 +87,18 @@ function Concierge({ open, onClose }) {
     setInput("");
     setBusy(true);
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      // La API key de OpenAI vive solo en el servidor (api/concierge.js);
+      // el navegador nunca la ve.
+      const res = await fetch("/api/concierge", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "claude-sonnet-4-6",
-          max_tokens: 1000,
-          system: SYSTEM_PROMPT[lang],
+          lang,
           messages: next.map((m) => ({ role: m.role, content: m.content })),
         }),
       });
       const data = await res.json();
-      const reply = (data.content || [])
-        .filter((b) => b.type === "text")
-        .map((b) => b.text)
-        .join("\n")
-        .trim();
-      setMsgs((m) => [...m, { role: "assistant", content: reply || t("concierge.retry") }]);
+      setMsgs((m) => [...m, { role: "assistant", content: data.reply || t("concierge.retry") }]);
     } catch (e) {
       setMsgs((m) => [
         ...m,
@@ -169,12 +164,14 @@ function Hero({ onReserve, onChat }) {
   return (
     <section id="inicio" className="hero">
       <div className="hero-video-wrap" aria-hidden="true">
-        <iframe
+        <video
           className="hero-video"
-          src={`https://www.youtube-nocookie.com/embed/${HERO_VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${HERO_VIDEO_ID}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0&playsinline=1`}
-          title="Video de fondo — Mesón del Marqués"
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
+          src={HERO_VIDEO_SRC}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
           tabIndex={-1}
         />
       </div>
@@ -446,10 +443,10 @@ function Nav({ scrolled, onChat, active, go }) {
         </div>
       </header>
       <div className={`mobmenu glass-strong ${openM ? "on" : ""}`}>
+        <button className="mobmenu-close" onClick={() => setOpenM(false)} aria-label={t("nav.close")}>
+          <Ico.close />
+        </button>
         {NAV[lang].map((n) => <button key={n.id} onClick={() => nav(n.id)}>{n.label}</button>)}
-        <div className="mobmenu-lang">
-          <LangSwitch className="lg" />
-        </div>
         <button className="mob-chat" onClick={() => { setOpenM(false); onChat(); }}>
           <Ico.spark s={16} /> {t("nav.concierge")}
         </button>

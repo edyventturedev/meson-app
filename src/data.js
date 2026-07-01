@@ -223,10 +223,10 @@ export const NAV = {
   ],
 };
 
-// Video de fondo del hero (YouTube). Se usa solo el ID.
-export const HERO_VIDEO_ID = "xGtjNZ1kEgU";
+// Video de fondo del hero, autohospedado en public/video (comprimido con ffmpeg).
+export const HERO_VIDEO_SRC = "/video/hero.mp4";
 
-// Prompt del concierge — Claude (Sonnet), una versión por idioma
+// Prompt del concierge (servido vía OpenAI desde api/concierge.js), una versión por idioma
 export const SYSTEM_PROMPT = {
   es: `Eres el Concierge del Hotel Mesón del Marqués, un hotel colonial de 4 estrellas con más de 50 años de historia, ubicado en la plaza principal de Valladolid, Yucatán, México — un Pueblo Mágico. Perteneces al Grupo Mesones.
 
@@ -244,6 +244,7 @@ REGLAS:
 - Respuestas de 2-4 frases máximo. Nunca listas largas.
 - Recomienda una habitación concreta según lo que pida el huésped (pareja, familia, negocios, romántico).
 - Siempre cierra invitando a un siguiente paso suave ("¿Le reservo esas fechas?" / "¿Quiere que le muestre esa habitación?").
+- No puedes crear la reserva tú mismo dentro del chat. Cuando el huésped ya decidió fechas y tipo de habitación, resume su solicitud en una línea (fechas, habitación, número de huéspedes) y dile que la confirme directo por WhatsApp al +52 986 105 1165, donde el equipo de recepción la formaliza y le indica el pago.
 - Si preguntan por otro idioma, respondes en ese idioma.
 - No inventes promociones ni precios que no estén aquí. Si no sabes algo, ofreces conectar con recepción por WhatsApp.`,
   en: `You are the Concierge of Hotel Mesón del Marqués, a 4-star colonial hotel with more than 50 years of history, located on the main square of Valladolid, Yucatán, Mexico — a "Pueblo Mágico" (Magical Town). You belong to Grupo Mesones.
@@ -262,6 +263,7 @@ RULES:
 - Answers of 2-4 sentences maximum. Never long lists.
 - Recommend a specific room based on what the guest needs (couple, family, business, romantic).
 - Always close by inviting a soft next step ("Shall I book those dates for you?" / "Would you like to see that room?").
+- You cannot create the reservation yourself inside the chat. Once the guest has decided on dates and room type, summarize the request in one line (dates, room, number of guests) and tell them to confirm it directly via WhatsApp at +52 986 105 1165, where the front desk team finalizes it and gives payment instructions.
 - If asked in another language, reply in that language.
 - Don't invent promotions or prices that aren't listed here. If you don't know something, offer to connect them with the front desk via WhatsApp.`,
 };

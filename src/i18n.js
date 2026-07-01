@@ -14,7 +14,7 @@ const DEFAULT_LANG = "es";
 // se traducen directamente en data.js).
 export const translations = {
   es: {
-    nav: { concierge: "Concierge", reserve: "Reservar", menu: "Menú" },
+    nav: { concierge: "Concierge", reserve: "Reservar", menu: "Menú", close: "Cerrar menú" },
     dock: { home: "Inicio", rooms: "Cuartos", book: "Reservar", area: "Zona", concierge: "Concierge" },
     lang: { label: "Idioma" },
     hero: {
@@ -100,7 +100,7 @@ export const translations = {
     },
   },
   en: {
-    nav: { concierge: "Concierge", reserve: "Book", menu: "Menu" },
+    nav: { concierge: "Concierge", reserve: "Book", menu: "Menu", close: "Close menu" },
     dock: { home: "Home", rooms: "Rooms", book: "Book", area: "Area", concierge: "Concierge" },
     lang: { label: "Language" },
     hero: {
