@@ -435,7 +435,6 @@ function Nav({ scrolled, onChat, active, go }) {
             ))}
           </nav>
           <div className="nav-right">
-            <button className="pill pill-line sm hide-mob" onClick={onChat}>{t("nav.concierge")}</button>
             <LangSwitch />
             <button className="pill pill-gold sm" onClick={() => nav("reservar")}>{t("nav.reserve")}</button>
             <button className="burger" onClick={() => setOpenM((v) => !v)} aria-label={t("nav.menu")}><span /><span /><span /></button>
@@ -518,7 +517,7 @@ export default function App() {
       </main>
       <Footer />
       <Dock onChat={openChat} active={active} go={go} />
-      <button className="fab glass-strong" onClick={openChat} aria-label="Concierge"><Ico.spark s={20} /></button>
+      <button className="fab" onClick={openChat} aria-label="Concierge"><Ico.spark s={22} /></button>
       <Concierge open={chatOpen} onClose={() => setChatOpen(false)} />
     </div>
   );
